@@ -1,0 +1,9 @@
+query BookByName($bookName: String!)
+{
+    bookByName(bookName: $bookName) {
+        title
+        author {
+            fullName
+        }
+    }
+}
