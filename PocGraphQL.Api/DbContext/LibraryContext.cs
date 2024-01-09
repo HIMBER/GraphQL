@@ -12,8 +12,8 @@ public class LibraryContext : Microsoft.EntityFrameworkCore.DbContext
         _configuration = configuration;
     }
 
-    public DbSet<Book> Books { get; set; }
-    public DbSet<Author> Authors { get; set; }
+    public DbSet<Book> Books => Set<Book>();
+    public DbSet<Author> Authors => Set<Author>();
 
     /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

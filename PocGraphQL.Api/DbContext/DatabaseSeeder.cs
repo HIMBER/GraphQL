@@ -30,7 +30,7 @@ public static class DatabaseSeeder
         {
             await context.Books.AddRangeAsync(new List<Book>()
             {
-                new(1, "Le .Net y'a pas mieuyx", 1),
+                new(1, "Le .Net y'a pas mieux", 1),
                 new(2, "Vieux souvenir", 2),
                 new(3, "La vie des Sayans", 3),
                 new(4, "Toujours gagner c'est fatigant", 3),
