@@ -1,6 +1,6 @@
 using HotChocolate.Caching;
-using PocGraphQL.Api.DbContext;
-using PocGraphQL.Api.Model;
+using PocGraphQL.Common.DbContext;
+using PocGraphQL.Common.Model;
 
 namespace PocGraphQL.Api.Queries;
 
@@ -25,19 +25,13 @@ public class Query
                 Name = "Jon Skeet"
             }
         };
-
+*/
     [CacheControl(10_000, Scope = CacheControlScope.Public)]
     public Book GetSampleBook2() =>
-        new Book
-        {
-            Title = "Book2",
-            Date = DateTimeOffset.Now,
-            Author = new Author
-            {
-                Name = "Jon Skeet"
-            }
-        };*/
-    
+        new Book(
+            1,
+            "Book2", 5);
+
     /*public async Task<Author> GetAuthorByNameAsync(
         string name,
         IAuthorByNameDataLoader authorByName,

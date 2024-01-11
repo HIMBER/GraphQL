@@ -1,5 +1,5 @@
-using PocGraphQL.Api.DataLoaders;
-using PocGraphQL.Api.Model;
+using PocGraphQL.Common.DataLoaders;
+using PocGraphQL.Common.Model;
 
 namespace PocGraphQL.Api.Queries;
 
@@ -7,7 +7,7 @@ public class BookType : ObjectType<Book>
 {
     protected override void Configure(IObjectTypeDescriptor<Book> descriptor)
     {
-        descriptor.Field(book => book.AuthorId)
+        descriptor.Field(book => book.AuthorId) // Remplace le champ AuthorId par le champ author
             .Name("author")
             .Resolve(async context =>
             {
