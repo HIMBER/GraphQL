@@ -1,8 +1,9 @@
+using GreenDonut;
 using Microsoft.EntityFrameworkCore;
-using PocGraphQL.Api.DbContext;
-using PocGraphQL.Api.Model;
+using PocGraphQL.Common.DbContext;
+using PocGraphQL.Common.Model;
 
-namespace PocGraphQL.Api.DataLoaders;
+namespace PocGraphQL.Common.DataLoaders;
 
 public class AuthorBooksDataLoader : GroupedDataLoader<int, Book> // Relation un à plusieurs
 {

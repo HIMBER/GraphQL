@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PocGraphQL.Api.Model;
+namespace PocGraphQL.Common.Model;
 
 [Table("book")]
 public class Book

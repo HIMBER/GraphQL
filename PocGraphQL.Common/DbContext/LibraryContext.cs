@@ -1,17 +1,14 @@
 using Microsoft.EntityFrameworkCore;
-using PocGraphQL.Api.Model;
+using PocGraphQL.Common.Model;
 
-namespace PocGraphQL.Api.DbContext;
+namespace PocGraphQL.Common.DbContext;
 
 public class LibraryContext : Microsoft.EntityFrameworkCore.DbContext
 {
-    private readonly IConfiguration _configuration;
-
-    public LibraryContext(DbContextOptions<LibraryContext> options, IConfiguration configuration) : base(options)
+    public LibraryContext(DbContextOptions<LibraryContext> options) : base(options)
     {
-        _configuration = configuration;
     }
-
+    
     public DbSet<Book> Books => Set<Book>();
     public DbSet<Author> Authors => Set<Author>();
 

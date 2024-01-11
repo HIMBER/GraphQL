@@ -1,7 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using HotChocolate;
 
-namespace PocGraphQL.Api.Model;
+namespace PocGraphQL.Common.Model;
 
 [GraphQLName("bookAuthor")]
 [Table("author")]

@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PocGraphQL.Api", "PocGraphQL.Api\PocGraphQL.Api.csproj", "{C0A1A184-AB0C-4B21-A654-5C03E4A58141}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PocGraphQL.Common", "PocGraphQL.Common\PocGraphQL.Common.csproj", "{D601160F-26E4-4CD4-9E3A-052DB5BC204D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{C0A1A184-AB0C-4B21-A654-5C03E4A58141}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0A1A184-AB0C-4B21-A654-5C03E4A58141}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0A1A184-AB0C-4B21-A654-5C03E4A58141}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D601160F-26E4-4CD4-9E3A-052DB5BC204D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D601160F-26E4-4CD4-9E3A-052DB5BC204D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D601160F-26E4-4CD4-9E3A-052DB5BC204D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D601160F-26E4-4CD4-9E3A-052DB5BC204D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
