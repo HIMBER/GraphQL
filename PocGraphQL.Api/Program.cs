@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using PocGraphQL.Api.DbContext;
 using PocGraphQL.Api.Queries;
-using PocGraphQL.Common.DataLoaders;
 using PocGraphQL.Common.DbContext;
+using PocGraphQL.Common.Types;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,11 +18,9 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddGraphQLServer()
     .InitializeOnStartup()
     .RegisterDbContext<LibraryContext>(DbContextKind.Resolver)
-    .AddDataLoader<AuthorBooksDataLoader>()
-    .AddDataLoader<AuthorDataLoader>()
     .AddQueryType<Query>()
-    .AddType<AuthorType>()
-    .AddType<BookType>()
+    .AddTypeExtension<AuthorType>()
+    .AddTypeExtension<BookType>()
     .AddCacheControl()
     .UseQueryCachePipeline();
 /*.UsePersistedQueryPipeline()

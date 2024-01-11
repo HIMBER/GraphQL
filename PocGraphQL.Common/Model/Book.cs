@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace PocGraphQL.Common.Model;
 
 [Table("book")]
-public class Book
+public partial class Book
 {
     public Book(int id, string title, int authorId)
     {
@@ -20,8 +20,6 @@ public class Book
     public string Title { get; set; }
 
     public int AuthorId { get; set; }
-
-    //public Author Author { get; set; }
-
+    
     public DateTimeOffset Date { get; set; }
 }

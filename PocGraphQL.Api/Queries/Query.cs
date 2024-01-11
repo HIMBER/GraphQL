@@ -1,4 +1,5 @@
 using HotChocolate.Caching;
+using Microsoft.EntityFrameworkCore;
 using PocGraphQL.Common.DbContext;
 using PocGraphQL.Common.Model;
 
