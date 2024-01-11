@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using PocGraphQL.Api.Model;
+using PocGraphQL.Common.DbContext;
+using PocGraphQL.Common.Model;
 
 namespace PocGraphQL.Api.DbContext;
 

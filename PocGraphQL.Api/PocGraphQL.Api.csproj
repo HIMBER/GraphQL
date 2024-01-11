@@ -13,14 +13,11 @@
         <PackageReference Include="HotChocolate.Caching" Version="13.8.1" />
         <PackageReference Include="HotChocolate.Data.EntityFramework" Version="13.8.1" />
         <PackageReference Include="HotChocolate.PersistedQueries.FileSystem" Version="13.8.1" />
-        <PackageReference Include="HotChocolate.Types.Analyzers" Version="13.8.1" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0"/>        
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 
@@ -31,6 +28,10 @@
       <None Update="persisted_queries\d982055a0ecff091561965585f5d60be.graphql">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\PocGraphQL.Common\PocGraphQL.Common.csproj" />
     </ItemGroup>
 
 </Project>
