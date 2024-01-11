@@ -1,10 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using PocGraphQL.Api.DbContext;
-using PocGraphQL.Api.Model;
 
 namespace PocGraphQL.Api.Helpers;
 
-[ExtendObjectType<Author>]
+/*[ExtendObjectType<Author>]
 public static class AuthorHelper
 {
     [DataLoader]
@@ -15,4 +14,4 @@ public static class AuthorHelper
         await context.Authors
         .Where(a => a.Name.StartsWith(name))
         .ToListAsync(cancellationToken: cancellationToken);
-}
+}*/
