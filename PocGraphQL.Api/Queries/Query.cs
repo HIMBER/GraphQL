@@ -7,6 +7,9 @@ namespace PocGraphQL.Api.Queries;
 
 public class Query
 {
+    public IQueryable<Author> GetAuthors(LibraryContext context) => context.Authors;
+    public IQueryable<Book> GetBooks(LibraryContext context) => context.Books;
+    
     /*public Book GetSampleBook() =>
         new Book
         {
@@ -37,7 +40,4 @@ public class Query
         string name,
         IAuthorByNameDataLoader authorByName,
         CancellationToken cancellationToken) => */
-
-    public IQueryable<Author> GetAuthors(LibraryContext context) => context.Authors;
-    public IQueryable<Book> GetBooks(LibraryContext context) => context.Books;
 }
