@@ -25,7 +25,7 @@ public class BookType : ObjectType<Book>
     [DataLoader]
     internal static async Task<IReadOnlyDictionary<int, Author>> GetAuthorsByIdAsync(
         IReadOnlyList<int> keys,
-        LibraryContext context,
+        ApiContext context,
         CancellationToken cancellationToken)
     {
         return await context.Authors.Where(author => keys.Contains(author.Id))
