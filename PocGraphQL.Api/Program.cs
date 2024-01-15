@@ -10,17 +10,24 @@ var configuration = builder.Configuration;
 
 builder.Services.AddSingleton<IConfiguration>(configuration);
 
-builder.Services.AddDbContextPool<LibraryContext>(options =>
+builder.Services.AddDbContext<LibraryContext>(options =>
     options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddDbContext<ApiContext>(options =>
+    options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+
+/*builder.Services.AddDbContextFactory<LibraryContext>(options =>
+    options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));*/
 
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddGraphQLServer()
     .InitializeOnStartup()
-    .RegisterDbContext<LibraryContext>(DbContextKind.Resolver)
+    .RegisterDbContext<ApiContext>(DbContextKind.Resolver)
     .AddQueryType<Query>()
     .AddTypeExtension<AuthorType>()
     .AddTypeExtension<BookType>()
+    .AddTypeExtension<AddressType>()
     .AddCacheControl()
     .UseQueryCachePipeline();
 /*.UsePersistedQueryPipeline()
