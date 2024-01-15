@@ -7,8 +7,9 @@ namespace PocGraphQL.Api.Queries;
 
 public class Query
 {
-    public IQueryable<Author> GetAuthors(LibraryContext context) => context.Authors;
-    public IQueryable<Book> GetBooks(LibraryContext context) => context.Books;
+    public IQueryable<Author> GetAuthors(ApiContext context) => context.Authors;
+    public IQueryable<Book> GetBooks(ApiContext context) => context.Books;
+    public IQueryable<Address> GetAddresses(ApiContext context) => context.Addresses;
     
     /*public Book GetSampleBook() =>
         new Book
