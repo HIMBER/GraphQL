@@ -11,6 +11,7 @@ public class LibraryContext : Microsoft.EntityFrameworkCore.DbContext
     
     public DbSet<Book> Books => Set<Book>();
     public DbSet<Author> Authors => Set<Author>();
+    public DbSet<Address> Addresses => Set<Address>();
 
     /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -23,6 +24,23 @@ public class LibraryContext : Microsoft.EntityFrameworkCore.DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasDefaultSchema("public");
+        
+        modelBuilder.Entity<Author>()
+            .ToTable("author")
+            .HasKey(a => a.Id);
+        
+        modelBuilder.Entity<Book>()
+            .ToTable("book")
+            .HasKey(b => b.Id);
+        
+        modelBuilder.Entity<Address>()
+            .ToTable("address")
+            .HasKey(b => b.Id);
+        
+        /*modelBuilder.Entity<Author>()
+            .HasOne(a => a.Address)
+            .WithOne(b => b.Author)
+            .HasForeignKey<Author>(b => b.AddressId);*/
         
         /*// Mapping for Author entity
         modelBuilder.Entity<Author>()
