@@ -6,7 +6,7 @@ namespace PocGraphQL.Api.DbContext;
 
 public static class DatabaseSeeder
 {
-   public static async Task SeedDatabaseIfNecessary(WebApplication webApplication)
+    public static async Task SeedDatabaseIfNecessary(WebApplication webApplication)
     {
         using var scope = webApplication.Services.CreateScope();
 
@@ -22,6 +22,19 @@ public static class DatabaseSeeder
                 new(2, "Kobrakan"),
                 new(3, "SonGoku"),
                 new(4, "Vegeta")
+            });
+
+            await context.SaveChangesAsync();
+        }
+        
+        if (!await context.Addresses.AnyAsync())
+        {
+            await context.Addresses.AddRangeAsync(new List<Address>()
+            {
+                new(1, "Rue de la Foux", 1),
+                new(2, "Rue du Cobra", 2),
+                new(3, "Planète Terre", 3),
+                new(4, "Planète Vegeta", 4)
             });
 
             await context.SaveChangesAsync();
