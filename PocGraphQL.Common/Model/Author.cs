@@ -6,7 +6,7 @@ namespace PocGraphQL.Common.Model;
 
 [GraphQLName("bookAuthor")]
 [Table("author")]
-public partial class Author 
+public class Author 
 {
     public Author(int id, string name)
     {

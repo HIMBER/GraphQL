@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace PocGraphQL.Common.Model;
 
 [Table("book")]
-public partial class Book
+public class Book
 {
     public Book(int id, string title, int authorId)
     {
