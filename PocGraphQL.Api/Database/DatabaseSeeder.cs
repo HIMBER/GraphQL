@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PocGraphQL.Common.DbContext;
 using PocGraphQL.Common.Model;
 
-namespace PocGraphQL.Api.DbContext;
+namespace PocGraphQL.Api.Database;
 
 public static class DatabaseSeeder
 {
@@ -10,7 +10,7 @@ public static class DatabaseSeeder
     {
         using var scope = webApplication.Services.CreateScope();
 
-        await using var context = scope.ServiceProvider.GetRequiredService<LibraryContext>();
+        await using var context = scope.ServiceProvider.GetRequiredService<ApiContext>();
 
         await context.Database.MigrateAsync();
 
