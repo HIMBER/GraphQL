@@ -1,31 +1,39 @@
-using System.Diagnostics;
+using HotChocolate.Execution;
 using HotChocolate.Types.Pagination;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Npgsql;
 using OpenTelemetry.Logs;
-using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
-using OpenTelemetry.Trace;
 using PocGraphQL.Api;
 using PocGraphQL.Api.Database;
 using PocGraphQL.Api.Queries;
+using PocGraphQL.Common;
 using PocGraphQL.Common.DbContext;
+using PocGraphQL.Common.ModelTypes;
 using PocGraphQL.Common.Telemetry;
-using PocGraphQL.Common.Types;
+using RequestDelegate = HotChocolate.Execution.RequestDelegate;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
 
+builder.Services.AddLogging();
+
+builder.Logging.AddRinLogger();
+
+builder.Services.AddRin();
+
 builder.Services.AddSingleton<IConfiguration>(configuration);
 builder.Services.AddSingleton<DiagnosticConfig>();
+
+builder.Services.AddAutoMapper(typeof(PocGraphQL.Common.Mappers.AddressDTOProfile), typeof(PocGraphQL.Common.Mappers.AuthorDTOProfile), typeof(PocGraphQL.Common.Mappers.BookDTOProfile));
 
 /*builder.Services.AddDbContext<LibraryContext>(options =>
     options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));*/
 
 builder.Services.AddDbContext<ApiContext>(options =>
     options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
+        .EnableSensitiveDataLogging()
+        .EnableDetailedErrors()
         .LogTo(Console.WriteLine, LogLevel.Trace));
 
 /*builder.Services.AddDbContextFactory<LibraryContext>(options =>
@@ -61,12 +69,12 @@ builder.Logging.AddOpenTelemetry(logging =>
         .AddOtlpExporter( o => o.Endpoint = new Uri("http://otel-collector:5317"));
 });
 
-builder.Services.AddOpenTelemetry()
+/*builder.Services.AddOpenTelemetry()
     .WithTracing(traceProviderBuilder =>
         traceProviderBuilder
             .AddNpgsql()
             .AddEntityFrameworkCoreInstrumentation()
-            .AddOtlpExporter());
+            .AddOtlpExporter());*/
 
 /*builder.Services.AddOpenTelemetry()
     .WithTracing(tracerProviderBuilder =>
@@ -82,12 +90,11 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddGraphQLServer()
     .InitializeOnStartup()
+    .AllowIntrospection(true)
     .RegisterDbContext<ApiContext>(DbContextKind.Resolver)
+    .AddHttpRequestInterceptor<HttpRequestInterceptor>()
     .AddErrorFilter<GraphQLErrorFilter>()
     .AddQueryType<Query>()
-    .AddTypeExtension<AuthorType>()
-    .AddTypeExtension<BookType>()
-    .AddTypeExtension<AddressType>()
     .SetPagingOptions(new PagingOptions()
     {
         MaxPageSize = 50,
@@ -98,21 +105,45 @@ builder.Services.AddGraphQLServer()
     .AddFiltering()
     .AddSorting()
     .AddCacheControl()
-    .UseQueryCachePipeline();
+    .AddPocTypes()
+    .AddTypeExtension<AddressExtensions>()
+    .UseDefaultPipeline();
+    //.UseQueryCachePipeline();
+    //.UseRequest<AccessControlPolicyGLMiddleware>();
 /*.UsePersistedQueryPipeline()
 .AddReadOnlyFileSystemQueryStorage("./persisted_queries");*/
 
 var app = builder.Build();
 app.MapGraphQL();
 
-
 if (app.Environment.IsDevelopment())
 {
+    app.UseRin();
     await DatabaseSeeder.SeedDatabaseIfNecessary(app);
+    app.UseRinDiagnosticsHandler();
 }
 
 app.UseHttpsRedirection();
 
 app.Run();
+
+public class AccessControlPolicyGLMiddleware
+{
+    private readonly RequestDelegate _next;
+    private readonly ILogger<AccessControlPolicyGLMiddleware> _logger;
+
+    public AccessControlPolicyGLMiddleware(RequestDelegate next, ILogger<AccessControlPolicyGLMiddleware> logger)
+    {
+        _next = next;
+        _logger = logger;
+    }
+
+    public async Task Invoke(IRequestContext context)
+    {
+        _logger.LogCritical("in => document id : {documentId} / operationId : {operationId}", context.DocumentId, context.OperationId);
+        await _next(context);
+        _logger.LogCritical("out => document id : {documentId} / operationId : {operationId}", context.DocumentId, context.OperationId);
+    }
+}
 
 
