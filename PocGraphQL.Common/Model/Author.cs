@@ -21,7 +21,10 @@ public class Author
 
     public int Id { get; set; }
 
-    [Required] [UseUpperCase] public string Name { get; set; } = null!;
+    [Required]
+    [UseUpperCase]
+    [MaxLength(100)]
+    public string Name { get; set; } = null!;
 
     public virtual Address Address { get; set; } = null!;
 
@@ -29,7 +32,7 @@ public class Author
 
     public int VersionNumber { get; set; } = 2;
 
-    public string UseLessValue { get; set; } = "Useless";
+    [MaxLength(100)] public string UseLessValue { get; set; } = "Useless";
 
     public AuthorEnum AuthorEnum { get; set; }
 
