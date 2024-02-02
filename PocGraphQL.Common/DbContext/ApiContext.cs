@@ -12,4 +12,9 @@ public class ApiContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<Book> Books => Set<Book>();
     public DbSet<Author> Authors => Set<Author>();
     public DbSet<Address> Addresses => Set<Address>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        new Address().Configure(modelBuilder.Entity<Address>());
+    }
 }

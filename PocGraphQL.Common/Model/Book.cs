@@ -1,11 +1,16 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CSharpFunctionalExtensions;
 
 namespace PocGraphQL.Common.Model;
 
 [Table("book")]
 public class Book
 {
+    public Book()
+    {
+    }
+
     public Book(int id, string title, int authorId)
     {
         Id = id;
@@ -16,10 +21,16 @@ public class Book
 
     public int Id { get; set; }
 
-    [Required]
-    public string Title { get; set; }
+    [Required] public string Title { get; set; }
 
     public int AuthorId { get; set; }
-    
+
+    public virtual Author Author { get; set; }
+
     public DateTimeOffset Date { get; set; }
+
+    public static CSharpFunctionalExtensions.Result<Book> Create()
+    {
+        return Result.Success<Book>(default!);
+    }
 }

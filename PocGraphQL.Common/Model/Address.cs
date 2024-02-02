@@ -1,9 +1,12 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using CSharpFunctionalExtensions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace PocGraphQL.Common.Model;
 
 [Table("address")]
-public class Address
+public class Address : IEntityTypeConfiguration<Address>
 {
     public int Id { get; set; }
 
@@ -11,12 +14,32 @@ public class Address
 
     public int AuthorId { get; set; }
 
-    public Author Author { get; set; }
+    public AddressCode Code { get; }
 
-    public Address(int id, string streetName, int authorId)
+    public virtual Author Author { get; set; }
+
+    public Address()
+    {
+    }
+
+    public Address(int id, string streetName, int authorId, AddressCode code)
     {
         Id = id;
         StreetName = streetName;
         AuthorId = authorId;
+        Code = code;
+    }
+
+    public static CSharpFunctionalExtensions.Result<Address> Create()
+    {
+        return Result.Success<Address>(default!);
+    }
+
+    public void Configure(EntityTypeBuilder<Address> builder)
+    {
+        builder.ToTable("address", "public");
+        builder.Property(e => e.Id).ValueGeneratedNever();
+        builder.HasKey(b => b.Id);
+        builder.OwnsOne(e => e.Code).Property(p => p.Value).HasColumnName("Code");
     }
 }
