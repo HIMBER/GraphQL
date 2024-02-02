@@ -1,6 +1,4 @@
-using HotChocolate;
-
-[assembly: Module("Types")]
+[assembly: Module("PocTypes")]
 [assembly: DataLoaderDefaults(
     ServiceScope = DataLoaderServiceScope.DataLoaderScope,
-    AccessModifier = DataLoaderAccessModifier.Internal)]
+    AccessModifier = DataLoaderAccessModifier.PublicInterface)]
