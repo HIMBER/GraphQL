@@ -21,11 +21,11 @@ public class Book
 
     public int Id { get; set; }
 
-    [Required] public string Title { get; set; }
+    [Required] public string Title { get; set; } = null!;
 
     public int AuthorId { get; set; }
 
-    public virtual Author Author { get; set; }
+    public virtual Author Author { get; set; } = null!;
 
     public DateTimeOffset Date { get; set; }
 

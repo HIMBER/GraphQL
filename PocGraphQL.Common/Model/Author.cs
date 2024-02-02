@@ -7,34 +7,32 @@ using PocGraphQL.Common.Extensions;
 namespace PocGraphQL.Common.Model;
 
 [Table("author")]
-public class Author 
+public class Author
 {
     public Author()
     {
     }
-    
+
     public Author(int id, string name)
     {
         Id = id;
         Name = name;
     }
-    
+
     public int Id { get; set; }
-    
-    [Required]
-    [UseUpperCase]
-    public string Name { get; set; }
-    
-    public virtual Address Address { get; set; }
-    
-    public ICollection<Book> Books { get; set; }
+
+    [Required] [UseUpperCase] public string Name { get; set; } = null!;
+
+    public virtual Address Address { get; set; } = null!;
+
+    public ICollection<Book> Books { get; set; } = null!;
 
     public int VersionNumber { get; set; } = 2;
 
     public string UseLessValue { get; set; } = "Useless";
 
     public AuthorEnum AuthorEnum { get; set; }
-    
+
     public CSharpFunctionalExtensions.Result<Author> SetName(string name)
     {
         Name = name;
