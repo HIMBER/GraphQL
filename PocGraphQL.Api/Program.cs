@@ -25,8 +25,6 @@ builder.Services.AddRin();
 builder.Services.AddSingleton<IConfiguration>(configuration);
 builder.Services.AddSingleton<DiagnosticConfig>();
 
-builder.Services.AddAutoMapper(typeof(PocGraphQL.Common.Mappers.AddressDTOProfile), typeof(PocGraphQL.Common.Mappers.AuthorDTOProfile), typeof(PocGraphQL.Common.Mappers.BookDTOProfile));
-
 /*builder.Services.AddDbContext<LibraryContext>(options =>
     options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));*/
 
@@ -92,7 +90,6 @@ builder.Services.AddGraphQLServer()
     .InitializeOnStartup()
     .AllowIntrospection(true)
     .RegisterDbContext<ApiContext>(DbContextKind.Resolver)
-    .AddHttpRequestInterceptor<HttpRequestInterceptor>()
     .AddErrorFilter<GraphQLErrorFilter>()
     .AddQueryType<Query>()
     .SetPagingOptions(new PagingOptions()

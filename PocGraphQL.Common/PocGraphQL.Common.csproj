@@ -7,8 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper" />
-        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" />
         <PackageReference Include="CSharpFunctionalExtensions" />
         <PackageReference Include="HotChocolate" />
         <PackageReference Include="HotChocolate.Abstractions" />
