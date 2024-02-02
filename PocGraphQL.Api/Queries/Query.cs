@@ -1,16 +1,49 @@
+using System.Diagnostics;
+using System.Reflection;
 using HotChocolate.Caching;
+using HotChocolate.Types.Descriptors;
 using Microsoft.EntityFrameworkCore;
 using PocGraphQL.Common.DbContext;
 using PocGraphQL.Common.Model;
+using PocGraphQL.Common.Telemetry;
 
 namespace PocGraphQL.Api.Queries;
 
 public class Query
 {
-    public IQueryable<Author> GetAuthors(ApiContext context) => context.Authors;
-    public IQueryable<Book> GetBooks(ApiContext context) => context.Books;
-    public IQueryable<Address> GetAddresses(ApiContext context) => context.Addresses;
+    private static readonly ActivitySource MyActivitySource = new("OpenTelemetry.Demo.Jaeger");
+
+    private readonly DiagnosticConfig _diagnosticConfig;
+
+    public Query(DiagnosticConfig diagnosticConfig)
+    {
+        _diagnosticConfig = diagnosticConfig;
+    }
+
+    [UsePaging]
+    [UseProjection]
+    [UseFiltering]
+    [UseSorting]
+    public IQueryable<Author> GetAuthors(ApiContext context) => context.Authors.AsNoTracking();
+
+    /*[UseFiltering]
+    [UseSorting]
+    public IQueryable<AuthorDTO> GetAuthorsDTO(ApiContext context, [Service] IMapper mapper)
+    {
+        var authors = context.Authors;
+        return  mapper.Map<IEnumerable<AuthorDTO>>(authors).AsQueryable();
+    }*/
     
+    [UseProjection]
+    [UseFiltering]
+    [UseSorting]
+    public IQueryable<Book> GetBooks(ApiContext context) => context.Books;
+
+    [UseProjection]
+    [UseFiltering]
+    [UseSorting]
+    public IQueryable<Address> GetAddresses(ApiContext context) => context.Addresses.AsNoTracking();
+
     /*public Book GetSampleBook() =>
         new Book
         {
@@ -41,4 +74,23 @@ public class Query
         string name,
         IAuthorByNameDataLoader authorByName,
         CancellationToken cancellationToken) => */
+}
+
+public class UseYourCustomAttribute : ObjectFieldDescriptorAttribute
+{
+    protected override void OnConfigure(IDescriptorContext context, IObjectFieldDescriptor descriptor,
+        MemberInfo member)
+    {
+        descriptor.Use(next => async context =>
+        {
+            // before the resolver pipeline
+            await next(context);
+            // after the resolver pipeline
+
+            if (context.Result is IQueryable<Author> query)
+            {
+                // all middleware are applied to `query`
+            }
+        });
+    }
 }
