@@ -25,17 +25,11 @@ builder.Services.AddRin();
 builder.Services.AddSingleton<IConfiguration>(configuration);
 builder.Services.AddSingleton<DiagnosticConfig>();
 
-/*builder.Services.AddDbContext<LibraryContext>(options =>
-    options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));*/
-
 builder.Services.AddDbContext<ApiContext>(options =>
     options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
         .EnableSensitiveDataLogging()
         .EnableDetailedErrors()
         .LogTo(Console.WriteLine, LogLevel.Trace));
-
-/*builder.Services.AddDbContextFactory<LibraryContext>(options =>
-    options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));*/
 
 /*builder.Services.AddOpenTelemetry()
     .WithMetrics(metrics =>
